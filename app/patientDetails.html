@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #007bff;
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: #fff;
+        }
+        .card {
+            border: none;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+        }
+        .table {
+            margin-top: 20px;
+        }
+        a:link {
+            color: white;
+        }
+        .search-container {
+            max-width: 300px; /* Set a maximum width */
+            margin: 0 ; /* Center the search bar */
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Patient Management System</a>
+            
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="addPatient.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="patientList.html">Patients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+
+    <!-- Patient Details Section -->
+    <div class="container mt-5">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">Patient Details</h3>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>First Name:</strong> <span id="firstName">John</span></p>
+                        <p><strong>Last Name:</strong> <span id="lastName">Doe</span></p>
+                        <p><strong>Date of Birth:</strong> <span id="dob">1980-01-15</span></p>
+                        <p><strong>Gender:</strong> <span id="gender">Male</span></p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Phone:</strong> <span id="phone">1234567890</span></p>
+                        <p><strong>Email:</strong> <span id="email">john.doe@example.com</span></p>
+                        <p><strong>Address:</strong> <span id="address">123 Main St</span></p>
+                    </div>
+                </div>
+                <button class="btn btn-primary mt-3" onclick="goBack()">Back to List</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript for Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const patientId = urlParams.get('patientId');
+        if (patientId) {
+            fetchPatientDetails(patientId);
+        }
+
+        async function fetchPatientDetails(patientId) {
+            try {
+                const response = await fetch(`http://127.0.0.1:8000/patients/${patientId}`);
+                if (!response.ok) {
+                    throw new Error("Patient not found");
+                }
+                const patient = await response.json();
+
+                document.getElementById("firstName").textContent = patient.first_name;
+                document.getElementById("lastName").textContent = patient.last_name;
+                document.getElementById("dob").textContent = patient.date_of_birth;
+                document.getElementById("gender").textContent = patient.gender;
+                document.getElementById("phone").textContent = patient.phone;
+                document.getElementById("email").textContent = patient.email;
+                document.getElementById("address").textContent = patient.address;
+            } catch (error) {
+                console.error("Error loading patient data:", error);
+                alert("Patient details not available.");
+            }
+        }
+
+    </script>
+    
+</body>
+</html>

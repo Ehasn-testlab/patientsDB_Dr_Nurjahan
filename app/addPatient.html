@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patient Management System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        body {
+            background-color: #f0f4f8;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #007bff;
+        }
+        .navbar-brand, .navbar-nav .nav-link {
+            color: #fff;
+        }
+        .card {
+            border: none;
+            box-shadow: 0px 4px 8px rgba(0,0,0,0.1);
+        }
+        .patient-info {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+        .table th, .table td {
+            vertical-align: middle;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Patient Management System</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="addPatient.html">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="patientList.html">Patients</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Settings</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mt-5">
+        <!-- Patient Info Section -->
+        <div class="patient-info">
+            <h3 class="mb-4">Patient Details</h3>
+            <form id="patientForm">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="patientName" class="form-label">Name</label>
+                        <input type="text" class="form-control" id="patientName" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="patientAge" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="patientAge" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="patientGender" class="form-label">Gender</label>
+                        <select class="form-select" id="patientGender" required>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label for="patientCondition" class="form-label">Medical Condition</label>
+                        <input type="text" class="form-control" id="patientCondition" required>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary mt-3" onclick="addPatient()">Add Patient</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- JavaScript for Bootstrap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom JavaScript -->
+    <script>
+        function addPatient() {
+            const name = document.getElementById('patientName').value;
+            const age = document.getElementById('patientAge').value;
+            const gender = document.getElementById('patientGender').value;
+            const condition = document.getElementById('patientCondition').value;
+
+            if (name && age && gender && condition) {
+                const tableBody = document.getElementById('patientTableBody');
+                const newRow = document.createElement('tr');
+
+                newRow.innerHTML = `
+                    <td>${name}</td>
+                    <td>${age}</td>
+                    <td>${gender}</td>
+                    <td>${condition}</td>
+                `;
+
+                tableBody.appendChild(newRow);
+
+                // Clear the form fields
+                document.getElementById('patientForm').reset();
+            }
+        }
+    </script>
+</body>
+</html>
